@@ -50,7 +50,6 @@ userSchema.pre('save', async function(next) {
     next();
 });
 
-// Метод для проверки пароля
 userSchema.methods.comparePassword = async function(password) {
     return await bcrypt.compare(password, this.password);
 };

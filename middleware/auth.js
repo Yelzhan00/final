@@ -1,10 +1,7 @@
-// middleware/auth.js
-
 const jwt = require('jsonwebtoken');
 
-// Middleware для проверки JWT токена
 function isAuthenticated(req, res, next) {
-    const token = req.cookies.token;
+    const token = req.cookies.token;  
 
     if (!token) {
         return res.status(403).json({ message: "No token provided" });
@@ -15,7 +12,7 @@ function isAuthenticated(req, res, next) {
             return res.status(403).json({ message: "Failed to authenticate token" });
         }
 
-        req.userId = decoded.id;  // Сохраняем идентификатор пользователя
+        req.userId = decoded.id; 
         next();
     });
 }

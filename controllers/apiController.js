@@ -1,7 +1,5 @@
-// controllers/apiController.js
 const axios = require('axios');
 
-// Получение новостей
 exports.getNews = async (req, res) => {
   try {
     const response = await axios.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=239e2c1968804f6da46054cbec03f7ac');

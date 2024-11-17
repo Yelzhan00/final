@@ -1,11 +1,9 @@
-// routes/portfolioRoutes.js
-
 const express = require('express');
 const router = express.Router();
-const Portfolio = require('../models/Portfolio'); // Замените на правильный путь к модели
+const Portfolio = require('../models/Portfolio');
+const isAuthenticated = require('../middleware/auth');  
 
-// Получить все элементы портфолио
-router.get('/', async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     try {
         const portfolios = await Portfolio.find();
         res.json(portfolios);
@@ -14,8 +12,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Создать новый элемент портфолио
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     const { title, description, images } = req.body;
     const portfolio = new Portfolio({
         title,
@@ -31,13 +28,11 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Получить конкретный элемент портфолио по ID
-router.get('/:id', getPortfolio, (req, res) => {
+router.get('/:id', isAuthenticated, getPortfolio, (req, res) => {
     res.json(res.portfolio);
 });
 
-// Обновить элемент портфолио
-router.put('/:id', getPortfolio, async (req, res) => {
+router.put('/:id', isAuthenticated, getPortfolio, async (req, res) => {
     const { title, description, images } = req.body;
 
     if (title) res.portfolio.title = title;
@@ -52,8 +47,7 @@ router.put('/:id', getPortfolio, async (req, res) => {
     }
 });
 
-// Удалить элемент портфолио
-router.delete('/:id', getPortfolio, async (req, res) => {
+router.delete('/:id', isAuthenticated, getPortfolio, async (req, res) => {
     try {
         await res.portfolio.remove();
         res.json({ message: 'Portfolio item deleted' });
@@ -62,7 +56,6 @@ router.delete('/:id', getPortfolio, async (req, res) => {
     }
 });
 
-// Middleware для получения элемента портфолио по ID
 async function getPortfolio(req, res, next) {
     let portfolio;
     try {
