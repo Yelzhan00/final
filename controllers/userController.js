@@ -1,12 +1,10 @@
 const User = require('../models/User');
 
-// Получение всех пользователей
 const getUsers = async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
 };
 
-// Обновление данных пользователя (например, роль)
 const updateUserRole = async (req, res) => {
     const { role } = req.body;
 
