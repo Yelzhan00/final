@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<section class="dashboard">
+    <h2>Панель управления</h2>
+    <div>
+        <h3>Добро пожаловать, <%= user.firstName %>!</h3>
+        <p>Вы можете управлять вашим контентом и портфолио.</p>
+    </div>
+    <div>
+        <h3>Ваши элементы портфолио</h3>
+        <ul>
+            <% portfolioItems.forEach(function(item) { %>
+                <li>
+                    <h4><%= item.title %></h4>
+                    <a href="/admin/portfolio/edit/<%= item._id %>">Редактировать</a> | 
+                    <a href="/admin/portfolio/delete/<%= item._id %>">Удалить</a>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
